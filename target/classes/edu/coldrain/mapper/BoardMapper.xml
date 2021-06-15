@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.coldrain.mapper.BoardMapper">
+	<select id="getList" resultType="edu.coldrain.domain.BoardVO">
+		<![CDATA[
+			SELECT * FROM TBL_BOARD ORDER BY BNO DESC
+		]]>
+	</select>
+	
+	<insert id="insert">
+		<![CDATA[
+			INSERT INTO TBL_BOARD (BNO, TITLE, CONTENT, WRITER)
+			VALUES (SEQ_BOARD.NEXTVAL, #{title}, #{content}, #{writer})
+		]]>
+	</insert>
+	
+	<insert id="insertSelectKey">
+		<selectKey order="BEFORE" resultType="long" keyProperty="bno">
+			SELECT SEQ_BOARD.NEXTVAL FROM DUAL
+		</selectKey>
+		
+		<![CDATA[
+			INSERT INTO TBL_BOARD (BNO, TITLE, CONTENT, WRITER)
+			VALUES (#{bno}, #{title}, #{content}, #{writer})
+		]]>
+	</insert>
+	
+	<select id="read" resultType="edu.coldrain.domain.BoardVO">
+		<![CDATA[
+			SELECT TBL_BOARD.* FROM TBL_BOARD
+			WHERE BNO = #{bno}
+		]]>
+	</select>
+	
+	<delete id="delete">
+		<![CDATA[
+			DELETE FROM TBL_BOARD
+			WHERE BNO = #{bno}
+		]]>
+	</delete>
+	
+	<update id="update">
+		<![CDATA[
+			UPDATE TBL_BOARD SET
+			TITLE = #{title},
+			CONTENT = #{content},
+			WRITER = #{writer},
+			UPDATEDATE = SYSDATE
+			WHERE BNO = #{bno}
+		]]>
+	</update>
+	
+</mapper>
