@@ -52,4 +52,14 @@
 		]]>
 	</update>
 	
+	<select id="getListWithpaging" resultType="edu.coldrain.domain.BoardVO">
+		<![CDATA[
+			SELECT N.* FROM (
+			SELECT /*+ INDEX_DESC(TBL_BOARD PK_BOARD)*/ROWNUM RN, TBL_BOARD.* FROM TBL_BOARD
+			WHERE ROWNUM <= #{pageNum} * #{amount}
+			) N
+			WHERE RN > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+	
 </mapper>

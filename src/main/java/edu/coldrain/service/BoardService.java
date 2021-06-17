@@ -3,6 +3,7 @@ package edu.coldrain.service;
 import java.util.List;
 
 import edu.coldrain.domain.BoardVO;
+import edu.coldrain.domain.Criteria;
 
 public interface BoardService {
 
@@ -15,4 +16,6 @@ public interface BoardService {
 	public boolean remove(Long bno);
 	
 	public List<BoardVO> getList();
+	
+	public List<BoardVO> getList(Criteria criteria);
 }

@@ -9,6 +9,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import edu.coldrain.domain.BoardVO;
+import edu.coldrain.domain.Criteria;
+import edu.coldrain.domain.PageDTO;
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -82,6 +84,20 @@ public class BoardMapperTests {
 		
 		int count = boardMapper.update(board);
 		log.info("UPDATE COUNT = " + count);
+	}
+	
+	@Test
+	public void testPaging() {
+		Criteria criteria = new Criteria();
+		
+		List<BoardVO> list = boardMapper.getListWithpaging(criteria);
+	}
+	
+	@Test
+	public void testPageDTO() {
+		Criteria criteria = new Criteria();
+		PageDTO pageDTO = new PageDTO(criteria, 150);
+		log.info(pageDTO);
 	}
 	
 }

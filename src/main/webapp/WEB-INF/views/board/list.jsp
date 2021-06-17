@@ -48,6 +48,14 @@
                             </table>
                             <!-- /.table-responsive -->
                             
+                            <div class="pull-right">
+                            	<ul>
+                            		<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1">
+                            			
+                            		</c:forEach>
+                            	</ul>
+                            </div>
+                            
                         </div>
                         <!-- /.panel-body -->
                     </div>

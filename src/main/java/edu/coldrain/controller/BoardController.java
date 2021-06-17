@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.coldrain.domain.BoardVO;
+import edu.coldrain.domain.Criteria;
+import edu.coldrain.domain.PageDTO;
 import edu.coldrain.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -22,10 +24,13 @@ public class BoardController {
 	private final BoardService service;
 	
 	@GetMapping("/list")
-	public void list(Model model) {
+	public void list(Criteria criteria, Model model) {
 		log.info("BoardController.list()");
 		
-		model.addAttribute("list", service.getList());
+		log.info("CRITERIA = " + criteria);
+		
+		model.addAttribute("list", service.getList(criteria));
+		model.addAttribute("pageMaker", new PageDTO(criteria, 250));
 	}
 	
 	@GetMapping("/register")
