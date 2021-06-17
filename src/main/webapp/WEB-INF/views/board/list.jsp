@@ -48,13 +48,31 @@
                             </table>
                             <!-- /.table-responsive -->
                             
+                            
                             <div class="pull-right">
-                            	<ul>
-                            		<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1">
-                            			
+                            	<ul class="pagination">
+                            		<c:if test="${pageMaker.prev }">
+	                            		<li class="page-item">
+	                            			<a class="page-link" href="${pageMaker.startPage - 1 }" tebindex="-1">Previous</a>
+	                            		</li>                            		
+                            		</c:if>
+                            		<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
+                           				<li class="page-item ${pageMaker.criteria.pageNum eq num ? "active" : "" }">
+                           					<a href="${num }" class="page-link">${num }</a>
+                           				</li>	
                             		</c:forEach>
+                            		<c:if test="${pageMaker.next }">
+	                            		<li class="page-item">
+	                            			<a class="page-link" href="${pageMaker.endPage + 1 }" tabindex="-1">Next</a>
+	                            		</li>                            		
+                            		</c:if>
                             	</ul>
                             </div>
+                            
+                            <form id="actionForm" action="/board/list" method="get">
+                            	<input type="hidden" name="pageNum" value="${pageMaker.criteria.pageNum }" />
+                            	<input type="hidden" name="amount" value="${pageMaker.criteria.amount }" />
+                            </form>
                             
                         </div>
                         <!-- /.panel-body -->
@@ -110,6 +128,22 @@
             		$("#regBtn").click(function(){
             			self.location = "/board/register";
             		});
+            		
+            		//링크 처리
+            		var actionForm = $("#actionForm");
+            		
+            		$(".page-link").on("click", function(e) {
+            			e.preventDefault();
+            			
+            			var targetPage = $(this).attr("href");
+            			
+            			console.log(targetPage);
+            			
+            			//input 태그의 name이 pageNum인것의 값을 targetPage로 변경해 준다.
+            			actionForm.find("input[name='pageNum']").val(targetPage);
+            			actionForm.submit();
+            		});
+            		
             	});
             </script>
    
