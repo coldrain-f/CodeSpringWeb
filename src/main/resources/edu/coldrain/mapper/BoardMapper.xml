@@ -68,4 +68,32 @@
 		]]>
 	</select>
 	
+	<!-- 검색 처리 -->
+	<select id="searchTest" resultType="edu.coldrain.domain.BoardVO">
+		<![CDATA[
+			SELECT TBL_BOARD.* FROM TBL_BOARD
+			WHERE
+		]]> <!-- Map은 index가 key가 되고 item이 value가 된다. -->
+		<!-- collection="map"은 map.get("map") 한 것과 동일하다. -->
+		<trim suffix="and"> <!-- if문에 걸린다면 뒤에 and를 붙여주고 걸리지 않으면 붙이지 않는다. -->
+			<foreach collection="map" index="key" item="value" separator="OR" open="(" close=")">
+				<if test='key.equals("T")'>
+					TITLE LIKE #{value}
+				</if>
+				<if test="key == 'C'.toString()">
+					CONTENT LIKE #{value}
+				</if>
+				
+				<if test="key eq 'W'.toString()">
+					WRITER LIKE #{value}
+				</if>
+
+			</foreach>		
+		</trim>
+		
+		<![CDATA[
+			ROWNUM < 10
+		]]>
+	</select>
+	
 </mapper>
