@@ -20,6 +20,9 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                         	<form>
+                        		<input type="hidden" name="pageNum" value="${criteria.pageNum }" />
+                        		<input type="hidden" name="amount" value="${criteria.amount }" />
+                        	
 	                        	<div class="form-group">
 	                        		<label for="">BNO</label>
 	                        		<input type="text" class="form-control" name="bno" value="<c:out value="${board.bno }" />" readonly="readonly" />
@@ -66,8 +69,15 @@
 			
 			console.log(operation);
 			
-			if (operation === "list") {
-				self.location = "/board/list";
+			if (operation === "list") {	
+				formObj.find("input[name='bno']").remove()
+				formObj.find("input[name='title']").remove()
+				formObj.find("input[name='writer']").remove()
+				formObj.find("textarea[name='content']").remove()
+				
+				formObj.attr("action", "/board/list")
+					   .attr("method", "get")
+					   .submit()
 			} else if (operation === "remove") {
 				formObj.attr("action", "/board/remove")
 					   .attr("method", "post")

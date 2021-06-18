@@ -39,9 +39,36 @@
                            		<input type="text" class="form-control" name="writer" value="<c:out value="${board.writer }" />" readonly="readonly" />
                            	</div>
                            	
-                           	<button type="button" class="btn btn-default" onclick="location.href='/board/list'">List</button>
-                           	<button type="button" class="btn btn-default" onclick="location.href='/board/modify?bno=<c:out value="${board.bno }" />'">Modify</button>
+                           	<form id="actionForm" action="/board/list" method="get">
+                           		<input type="hidden" name="pageNum" value="${criteria.pageNum }"/>
+                           		<input type="hidden" name="amount" value="${criteria.amount }" />
+                           		<input type="hidden" name="bno" value="${board.bno }" />
+                           	</form>
+                           	
+                           	<button type="button" class="btn btn-default listBtn">List</button>
+                           	<button type="button" class="btn btn-default modifyBtn">Modify</button>
                             
+                            <script>
+                            	
+                            
+                            	$(document).ready(function() {
+                            		var actionForm = $("#actionForm")
+                            		
+                            		$(".listBtn").on("click", function(event) {
+                            			event.preventDefault()
+                            			actionForm.find("input[name='bno']")
+                            					  .remove()
+                            			actionForm.submit()
+                            		})
+                            		
+                            		$(".modifyBtn").on("click", function(event) {
+                            			event.preventDefault()
+                            			actionForm.attr("action", "/board/modify")
+                            					  .submit()
+                            		})
+                            		
+                            	})
+                            </script>
                         </div>
                         <!-- /.panel-body -->
                     </div>

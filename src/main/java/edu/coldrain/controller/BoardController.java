@@ -30,7 +30,7 @@ public class BoardController {
 		log.info("CRITERIA = " + criteria);
 		
 		model.addAttribute("list", service.getList(criteria));
-		model.addAttribute("pageMaker", new PageDTO(criteria, 250));
+		model.addAttribute("pageMaker", new PageDTO(criteria, 15));
 	}
 	
 	@GetMapping("/register")
@@ -53,28 +53,37 @@ public class BoardController {
 	}
 	
 	@GetMapping({ "/get", "/modify" })
-	public void get(@RequestParam("bno") Long bno, Model model) {
+	public void get(@RequestParam("bno") Long bno, Criteria criteria, Model model) {
 		model.addAttribute("board", service.get(bno));
 	}
 	
 	@PostMapping("/modify")
-	public String modify(BoardVO board, RedirectAttributes rttr) {
+	public String modify(BoardVO board, Criteria criteria, RedirectAttributes rttr) {
 		
 		boolean success = service.modify(board);
 		if (success) {
 			rttr.addFlashAttribute("result", "success");
 		}
 		
+		// /board/list로 redirect할 때 파라미터로 pageNum과 amount를 넘겨준다.
+		rttr.addAttribute("pageNum", criteria.getPageNum());
+		rttr.addAttribute("amount", criteria.getAmount());
+		
 		return "redirect:/board/list";
 	}
 	
 	@PostMapping("/remove")
-	public String remove(Long bno, RedirectAttributes rttr) {
+	public String remove(Long bno, Criteria criteria, RedirectAttributes rttr) {
 		
 		boolean success = service.remove(bno);
 		if (success) {
 			rttr.addFlashAttribute("result", "success");
 		}
+		
+		//이 부분 질문 남기자 / /board/list?pageNum=값&amount=값 형식으로 넘어가는건지?
+		//왜 ModelAttribute를 넘기면 안 되는건지?
+		rttr.addAttribute("pageNum", criteria.getPageNum());
+		rttr.addAttribute("amount", criteria.getAmount());
 		
 		return "redirect:/board/list";
 	}

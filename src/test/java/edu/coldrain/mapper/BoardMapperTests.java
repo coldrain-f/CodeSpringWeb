@@ -100,4 +100,11 @@ public class BoardMapperTests {
 		log.info(pageDTO);
 	}
 	
+	@Test
+	public void testGetTotalCount() {
+		Criteria criteria = new Criteria();
+		int totalCount = boardMapper.getTotalCount(criteria);
+		log.info("TOTAL COUNT = " + totalCount);
+	}
+	
 }

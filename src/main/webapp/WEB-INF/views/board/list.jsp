@@ -35,8 +35,8 @@
 	                                    <tr>
 	                                        <td><c:out value="${board.bno }" /></td>
 	                                        <td>
-	                                        	<a href="/board/get?bno=<c:out value="${board.bno }" /> ">
-	                                        		<c:out value="${board.content }" />
+	                                        	<a class="move" href="<c:out value="${board.bno }" />">
+	                                        		<c:out value="${board.title }" />
 	                                        	</a>
 	                                       	</td>
 	                                        <td><c:out value="${board.writer }" /></td>
@@ -53,11 +53,11 @@
                             	<ul class="pagination">
                             		<c:if test="${pageMaker.prev }">
 	                            		<li class="page-item">
-	                            			<a class="page-link" href="${pageMaker.startPage - 1 }" tebindex="-1">Previous</a>
+	                            			<a class="page-link" href="${pageMaker.startPage - 1 }" tabindex="-1">Previous</a>
 	                            		</li>                            		
                             		</c:if>
                             		<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
-                           				<li class="page-item ${pageMaker.criteria.pageNum eq num ? "active" : "" }">
+                           				<li class="page-item ${pageMaker.criteria.pageNum eq num ? 'active' : '' }">
                            					<a href="${num }" class="page-link">${num }</a>
                            				</li>	
                             		</c:forEach>
@@ -105,43 +105,59 @@
 			            
             <script>
             	$(document).ready(function(){
-            		var result = "<c:out value='${result }' />";
+            		var result = "<c:out value='${result }' />"
             		
-            		checkModal(result);
+            		checkModal(result)
             		
-            		history.replaceState({}, null, null);
+            		history.replaceState({}, null, null)
             		
             		function checkModal(result) {
             			if (result === '' || history.state) {
-            				return;
+            				return
             			}
             			
             			if (result === "success") {
             				$(".modal-body").html("정상적으로 처리되었습니다.");	
             			} else if (parseInt(result) > 0) {
-            				$(".modal-body").html("게시글 " + parseInt(result) + " 번이 등록되었습니다.");
+            				$(".modal-body").html("게시글 " + parseInt(result) + " 번이 등록되었습니다.")
             			}
             			
-            			$("#myModal").modal("show");
+            			$("#myModal").modal("show")
             		}
             		
             		$("#regBtn").click(function(){
-            			self.location = "/board/register";
+            			self.location = "/board/register"
             		});
             		
             		//링크 처리
-            		var actionForm = $("#actionForm");
+            		var actionForm = $("#actionForm")
             		
             		$(".page-link").on("click", function(e) {
-            			e.preventDefault();
+            			e.preventDefault()
             			
             			var targetPage = $(this).attr("href");
             			
-            			console.log(targetPage);
+            			console.log(targetPage)
             			
             			//input 태그의 name이 pageNum인것의 값을 targetPage로 변경해 준다.
             			actionForm.find("input[name='pageNum']").val(targetPage);
-            			actionForm.submit();
+            			actionForm.submit()
+            		});
+            		
+            		$(".move").on("click", function(event) {
+            			event.preventDefault()
+            			
+            			var targetBno = $(this).attr("href");
+            			console.log(targetBno)
+            			
+            			// actionForm.append("<input type='hidden' name='bno' value='" + targetBno + "'> /");
+            			$("<input>").attr("type", "hidden")
+            						.attr("name", "bno")
+            						.attr("value", targetBno)
+            						.appendTo(actionForm)
+            			
+            			actionForm.attr("action", "/board/get")
+            					  .submit()
             		});
             		
             	});
