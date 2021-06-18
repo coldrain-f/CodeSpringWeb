@@ -123,4 +123,16 @@ public class BoardMapperTests {
 		List<BoardVO> list = boardMapper.searchTest(outer);
 	}
 	
+	@Test
+	public void testSearchPaging() {
+		Criteria criteria = new Criteria();
+		
+		criteria.setPageNum(2);
+		criteria.setAmount(10);
+		criteria.setType("W");
+		criteria.setKeyword("USER01");
+		
+		List<BoardVO> list = boardMapper.getListWithpaging(criteria);
+	}
+	
 }

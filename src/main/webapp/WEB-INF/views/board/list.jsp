@@ -48,6 +48,21 @@
                             </table>
                             <!-- /.table-responsive -->
                             
+                            <form id="searchForm" action="/board/list" method="get">
+                            	<select name="type">
+                            	<option value="">---</option>
+                            		<option value="T">제목</option>
+                            		<option value="C">내용</option>
+                            		<option value="W">작성자</option>
+                            		<option value="TC">제목+내용</option>
+                            		<option value="TCW">제목+내용+작성자</option>
+                            	</select>
+                            	<input type="text" name="keyword" />
+                            	<input type="hidden" name="pageNum" value="${pageMaker.criteria.pageNum }" />
+                            	<input type="hidden" name="amount" value="${pageMaker.criteria.amount }" />
+                            	<button class="btn btn-default">Search</button>
+                            </form>
+                            
                             
                             <div class="pull-right">
                             	<ul class="pagination">
@@ -159,6 +174,15 @@
             			actionForm.attr("action", "/board/get")
             					  .submit()
             		});
+            		
+            		var searchForm = $("#searchForm")
+            		
+            		$("#searchForm button").on("click", function(event) {
+            			event.preventDefault()
+            			
+            			searchForm.find("input[name='pageNum']").val(1)
+            			searchForm.submit()
+            		})
             		
             	});
             </script>
