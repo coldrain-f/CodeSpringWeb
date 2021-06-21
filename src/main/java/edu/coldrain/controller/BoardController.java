@@ -30,7 +30,7 @@ public class BoardController {
 		log.info("CRITERIA = " + criteria);
 		
 		model.addAttribute("list", service.getList(criteria));
-		model.addAttribute("pageMaker", new PageDTO(criteria, 15));
+		model.addAttribute("pageMaker", new PageDTO(criteria, service.getTotalCount(criteria)));
 	}
 	
 	@GetMapping("/register")
@@ -68,6 +68,8 @@ public class BoardController {
 		// /board/list로 redirect할 때 파라미터로 pageNum과 amount를 넘겨준다.
 		rttr.addAttribute("pageNum", criteria.getPageNum());
 		rttr.addAttribute("amount", criteria.getAmount());
+		rttr.addAttribute("type", criteria.getType());
+		rttr.addAttribute("keyword", criteria.getKeyword());
 		
 		return "redirect:/board/list";
 	}

@@ -43,6 +43,8 @@
                            		<input type="hidden" name="pageNum" value="${criteria.pageNum }"/>
                            		<input type="hidden" name="amount" value="${criteria.amount }" />
                            		<input type="hidden" name="bno" value="${board.bno }" />
+                           		<input type="hidden" name="type" value="${criteria.type }" />
+                           		<input type="hidden" name="keyword" value="${criteria.keyword }" />
                            	</form>
                            	
                            	<button type="button" class="btn btn-default listBtn">List</button>

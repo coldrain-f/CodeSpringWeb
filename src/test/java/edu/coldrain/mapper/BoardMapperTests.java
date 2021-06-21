@@ -122,6 +122,18 @@ public class BoardMapperTests {
 		
 		List<BoardVO> list = boardMapper.searchTest(outer);
 	}
+	// 검색 처리 테스트 2
+	@Test
+	public void testSearch2() {
+		// pageNum = 1 and amount = 10
+		Criteria criteria = new Criteria();
+		
+		criteria.setType("WT");
+		criteria.setKeyword("USER01");
+		
+		List<BoardVO> list = boardMapper.searchTest2(criteria);
+		list.forEach(board -> log.info(board));
+	}
 	
 	@Test
 	public void testSearchPaging() {

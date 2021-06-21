@@ -50,14 +50,14 @@
                             
                             <form id="searchForm" action="/board/list" method="get">
                             	<select name="type">
-                            	<option value="">---</option>
-                            		<option value="T">제목</option>
-                            		<option value="C">내용</option>
-                            		<option value="W">작성자</option>
-                            		<option value="TC">제목+내용</option>
-                            		<option value="TCW">제목+내용+작성자</option>
+                            		<option value="" ${pageMaker.criteria.type == null ? 'selected' : '' }>---</option>
+                            		<option value="T" ${pageMaker.criteria.type eq 'T' ? 'selected' : '' }>제목</option>
+                            		<option value="C" ${pageMaker.criteria.type eq 'C' ? 'selected' : '' }>내용</option>
+                            		<option value="W" ${pageMaker.criteria.type eq 'W' ? 'selected' : '' }>작성자</option>
+                            		<option value="TC" ${pageMaker.criteria.type eq 'TC' ? 'selected' : '' }>제목+내용</option>
+                            		<option value="TCW" ${pageMaker.criteria.type eq 'TCW' ? 'selected' : '' }>제목+내용+작성자</option>
                             	</select>
-                            	<input type="text" name="keyword" />
+                            	<input type="text" name="keyword" value="${pageMaker.criteria.keyword }" />
                             	<input type="hidden" name="pageNum" value="${pageMaker.criteria.pageNum }" />
                             	<input type="hidden" name="amount" value="${pageMaker.criteria.amount }" />
                             	<button class="btn btn-default">Search</button>
@@ -87,6 +87,8 @@
                             <form id="actionForm" action="/board/list" method="get">
                             	<input type="hidden" name="pageNum" value="${pageMaker.criteria.pageNum }" />
                             	<input type="hidden" name="amount" value="${pageMaker.criteria.amount }" />
+                            	<input type="hidden" name="type" value="${pageMaker.criteria.type }" />
+                            	<input type="hidden" name="keyword" value="${pageMaker.criteria.keyword }" />
                             </form>
                             
                         </div>

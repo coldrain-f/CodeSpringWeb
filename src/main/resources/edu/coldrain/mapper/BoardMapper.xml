@@ -85,7 +85,7 @@
 		]]>
 	</select> -->
 	
-	<!-- 검색 처리 -->
+	<!-- 검색 처리 테스트1 -->
 	<select id="searchTest" resultType="edu.coldrain.domain.BoardVO">
 		<![CDATA[
 			SELECT TBL_BOARD.* FROM TBL_BOARD

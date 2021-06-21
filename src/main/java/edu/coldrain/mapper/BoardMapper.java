@@ -24,6 +24,9 @@ public interface BoardMapper {
 	
 	int getTotalCount(Criteria criteria);
 	
-	//검색 처리
+	//검색 처리 테스트
 	public List<BoardVO> searchTest(Map<String, Map<String, String>> map);
+	
+	//검색 처리 테스트2
+	public List<BoardVO> searchTest2(Criteria criteria);
 }
