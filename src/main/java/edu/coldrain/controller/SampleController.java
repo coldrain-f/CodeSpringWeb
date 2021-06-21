@@ -9,11 +9,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.coldrain.domain.BoardVO;
 import edu.coldrain.domain.SampleVO;
+import edu.coldrain.domain.Ticket;
 import edu.coldrain.service.BoardService;
 import lombok.extern.log4j.Log4j;
 
@@ -116,5 +119,13 @@ public class SampleController {
 													          .body(list);
 		
 		return entities;
+	}
+	
+	// @RequestBody 실습
+	@PostMapping("/ticket") //@RequestBody의 사용은 post 방식을 사용한다.
+	public Ticket convert(@RequestBody Ticket ticket) {
+		log.info("SampleController.ticket()");
+		
+		return ticket;
 	}
 }
