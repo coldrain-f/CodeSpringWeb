@@ -45,7 +45,7 @@ public class ReplyMapperTests {
 	
 	@Test
 	public void testDelete() {
-		mapper.delete(5L);
+		mapper.delete(11L);
 	}
 	
 	@Test

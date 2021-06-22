@@ -50,9 +50,26 @@
                            	<button type="button" class="btn btn-default listBtn">List</button>
                            	<button type="button" class="btn btn-default modifyBtn">Modify</button>
                             
-                            <script>
-                            	
+                            <script src="/resources/js/reply.js"></script>
                             
+                            <script>
+                            	console.log("==============")
+                            	console.log("JS TEST")
+                            	
+                            	var bnoValue = "<c:out value='${board.bno }' />"
+                            	
+                            	//for replyService add test
+                            	replyService.add(
+                            			{reply:"JS Test", replyer:"tester", bno:bnoValue},
+                            			function (result) {
+                            				alert("RESULT: " + result)
+                            			}
+                            	)
+                            	
+                            	
+                            </script>
+                            
+                            <script>
                             	$(document).ready(function() {
                             		var actionForm = $("#actionForm")
                             		
