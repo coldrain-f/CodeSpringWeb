@@ -1,4 +1,4 @@
- ```sql
+ql
 
 -- 데이터가 섞여있다.
 SELECT TBL_BOARD.* FROM TBL_BOARD;
