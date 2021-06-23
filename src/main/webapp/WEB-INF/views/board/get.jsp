@@ -133,6 +133,7 @@
             		<div class="panel panel-default">
             			<div class="panel-heading">
             				<i class="fa fa-comments fa-fw"></i> Reply
+            				<button id="addReplyBtn" class="btn btn-primary btn-xs pull-right">New Reply</button>
             			</div>
             			
             			<div class="panel-body">
@@ -152,6 +153,43 @@
             	</div>
             </div>
             
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">REPLY MODAL</h4>
+                        </div>
+                        <div class="modal-body">
+                        	<div class="form-group">
+                        		<label>Reply</label>
+                        		<input type="text" class="form-control" name="reply" />
+                        	</div>
+                        	
+                        	<div class="form-group">
+                        		<label>Replyer</label>
+                        		<input type="text" class="form-control" name="replyer"/>
+                        	</div>
+                        	
+                        	<div class="form-group">
+                        		<label>Reply Date</label>
+                        		<input type="text" class="form-control" name="replydate" />
+                        	</div>
+                        </div>
+                        <div class="modal-footer">
+                        	<button type="button" id="modalModifyBtn" class="btn btn-warning">Modify</button>
+                        	<button type="button" id="modalRemoveBtn" class="btn btn-danger">Remove</button>
+                        	<button type="button" id="modalRegisterBtn" class="btn btn-primary">Register</button>
+                            <button type="button" id="modalCloseBtn" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+            
             <script>
             	$(document).ready(function() {
             		var bnoValue = "<c:out value='${board.bno }' />";
@@ -168,11 +206,11 @@
             				}
             				
             				for (var i = 0, len = list.length || 0; i < len; i++) {
-            					str += "<li class='left clearfix' data-rno='" + list[i].bno + "'>"
+            					str += "<li class='left clearfix' data-rno='" + list[i].rno + "'>"
             					str += "<div>"
             					str += "<div class='header'>"
             					str += "<strong class='primary-font'>" + list[i].replyer + "</strong>"
-            					str += "<samll class='pull-right text-muted'>"+ list[i].replydate +"</samll>"
+            					str += "<samll class='pull-right text-muted'>"+ replyService.displayTime(list[i].replydate) +"</samll>"
             					str += "</div>"
             					str += "<p>" + list[i].reply + "</p>"
             					str += "<div></li></ul></div>"
@@ -181,6 +219,64 @@
             				replyUL.html(str)
             			})
             		}
+            		
+            		var modal = $(".modal")
+            		var modalInputReply = modal.find("input[name='reply']")
+            		var modalInputReplyer = modal.find("input[name='replyer']")
+            		var modalInputReplydate = modal.find("input[name='replydate']")
+            		
+            		var modalModifyBtn = $("#modalModifyBtn")
+            		var modalRemoveBtn = $("#modalRemoveBtn")
+            		var modalRegisterBtn = $("#modalRegisterBtn")
+            		
+            		$("#addReplyBtn").on("click", function(e) {
+            			modal.find("input").val("") // closest()가 뭐지?
+            			modalInputReplydate.closest("div").hide()
+            			modal.find("button[id != 'modalCloseBtn']").hide()
+            			
+            			modalRegisterBtn.show()
+            			$(".modal").modal("show")
+            		})
+            		
+            		modalRegisterBtn.on("click", function() {
+            			var reply = {
+            					reply: modalInputReply.val(),
+            					replyer: modalInputReplyer.val(),
+            					bno: bnoValue
+            			}
+            			
+            			replyService.add(reply, function(result) {
+            				alert(result)
+            				
+            				modal.find("input").val("")
+            				modal.modal("hide")
+            				
+            				showList(1)
+            			})
+            			
+            		})
+            		
+            		
+            		$(".chat").on("click", "li", function(e) {
+            			var rno = $(this).data("rno")
+            			console.log(rno)
+            			
+            			//동작 안함
+            			replyService.get(rno, function(reply) {
+            				console.log(reply)
+            				modalInputReply.val(reply.rno)
+            				modalInputReplyer.val(reply.replyer)
+            				modalInputReplydate.val(replyService.displayTime(reply.replydate)).attr("readonly", "readonly")
+            				modal.data("rno", reply.rno)
+            				
+            				modal.find("button[id != 'modalCloseBtn']").hide()
+            				modalModifyBtn.show()
+            				modalRemoveBtn.show()
+            				
+            				$(".modal").modal("show")
+            			})
+            		})
+            		
             	})
             </script>
    
