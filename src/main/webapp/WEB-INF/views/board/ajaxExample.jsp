@@ -55,8 +55,26 @@
                         			console.log("operation = " + operation)
                         			
                         			if (operation === "list") {
+                        				
+                        				$.ajax({
+                        					type: "get",
+                        					url: "/replies",
+                        					success: function(result, status) {
+                        						
+                        					},
+                        					error: function() {
+                        						
+                        					}
+                        				})
 
                         			} else if (operation === "register") {
+                        				
+                        				var reply = {
+                        					bno: $("#bno").val(),
+                        					reply: $("#reply").val(),
+                        					replyer: $("#replyer").val(),
+                        				}
+                        				
                         				$.ajax({
                         					type: "post", // method
                         					url: "/replies/new", // action
@@ -76,14 +94,15 @@
                         			} else if (operation === "remove") {
                         				$.ajax({
                         					type: "delete",
-                        					url: "/replies/14",
-                        					success: function(result, status) {
+                        					url: "/replies/" + $("#rno").val(),
+                        					success: function(result, textStatus) {
                         						console.log("result = " + result)
-                        						console.log("status = " + status)
-                        						console.log("xhr = " + xhr)
+                        						console.log("textStatus = " + textStatus)
                         					},
-                        					error: function() {
-                        						
+                        					error: function(xhr, textStatus, er) {
+                        						if (error) {
+                        							error(er)
+                        						}
                         					}
                         				})
                         			}

@@ -59,12 +59,37 @@
                             	var bnoValue = "<c:out value='${board.bno }' />"
                             	
                             	//for replyService add test
-                            	replyService.add(
+                            	/* replyService.add(
                             			{reply:"JS Test", replyer:"tester", bno:bnoValue},
                             			function (result) {
                             				alert("RESULT: " + result)
                             			}
-                            	)
+                            	) */
+                            	
+                            	/* replyService.getList(
+                            			{bno: bnoValue, page: 1 },
+                            			function(list) {
+                            				for (var i = 0, len = list.length || 0; i < len; i++) {
+                            					console.log(list[i])
+                            				}
+                            			}
+                            	) */
+                            	
+                            	/* replyService.remove(8, function(count) {
+                            		console.log("count = " + count)
+                            		if (count === "success") {
+                            			alert("REMOVED")
+                            		}
+                            	}, function(er) {
+                            		alert("ERROR...")
+                            	}) */
+                            	
+                            	/* replyService.update(
+                            			{rno: 7, bno: bnoValue, reply: "Modified Reply..."},
+                            			function(result) {
+                            				alert("수정 완료...")
+                            			}
+                            	) */
                             	
                             	
                             </script>
