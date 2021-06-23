@@ -91,6 +91,10 @@
                             			}
                             	) */
                             	
+                            	/* replyService.get(7, function(data) {
+                            		console.log(data)	
+                            	}) */
+                            	
                             	
                             </script>
                             
@@ -121,5 +125,63 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
+            
+            <!-- 덧글 관련 -->
+            <div class="row">
+            	<div class="col-lg-12">
+            		
+            		<div class="panel panel-default">
+            			<div class="panel-heading">
+            				<i class="fa fa-comments fa-fw"></i> Reply
+            			</div>
+            			
+            			<div class="panel-body">
+            				<ul class="chat">
+            					<li class="left clearfix" data-rno="12">
+            						<div>
+            							<div class="header">
+            								<strong class="primary-font">user00</strong>
+            								<samll class="pull-right text-muted">2021-06-23 13:13</samll>
+            							</div>
+            							<p>Good Job!</p>
+            						</div>
+            					</li>
+            				</ul>
+            			</div>
+            		</div>
+            	</div>
+            </div>
+            
+            <script>
+            	$(document).ready(function() {
+            		var bnoValue = "<c:out value='${board.bno }' />";
+            		var replyUL = $(".chat")
+            		
+            		showList(1)
+            		
+            		function showList(page) {
+            			replyService.getList({bno: bnoValue, page: page || 1}, function(list) {
+            				var str = ""
+            				if (list == null || list.length == 0) {
+            					replyUL.html("")
+            					return
+            				}
+            				
+            				for (var i = 0, len = list.length || 0; i < len; i++) {
+            					str += "<li class='left clearfix' data-rno='" + list[i].bno + "'>"
+            					str += "<div>"
+            					str += "<div class='header'>"
+            					str += "<strong class='primary-font'>" + list[i].replyer + "</strong>"
+            					str += "<samll class='pull-right text-muted'>"+ list[i].replydate +"</samll>"
+            					str += "</div>"
+            					str += "<p>" + list[i].reply + "</p>"
+            					str += "<div></li></ul></div>"
+            				}
+            				
+            				replyUL.html(str)
+            			})
+            		}
+            	})
+            </script>
    
 <%@include file="../includes/footer.jsp" %>
