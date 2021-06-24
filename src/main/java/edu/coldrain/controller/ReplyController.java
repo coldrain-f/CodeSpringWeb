@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.coldrain.domain.Criteria;
+import edu.coldrain.domain.ReplyPageDTO;
 import edu.coldrain.domain.ReplyVO;
 import edu.coldrain.service.ReplyService;
 import lombok.AllArgsConstructor;
@@ -53,7 +54,7 @@ public class ReplyController {
 					MediaType.APPLICATION_XML_VALUE,
 					MediaType.APPLICATION_JSON_VALUE
 			})
-	public ResponseEntity<List<ReplyVO>> getList(
+	public ResponseEntity<ReplyPageDTO> getList(
 			@PathVariable("bno") Long bno,
 			@PathVariable("page") int page) {
 		
@@ -62,7 +63,7 @@ public class ReplyController {
 		Criteria criteria = new Criteria(page, 10);
 		log.info("CRITERIA = " + criteria);
 		
-		List<ReplyVO> list = service.getList(criteria, bno);
+		ReplyPageDTO list = service.getListPage(criteria, bno);
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
